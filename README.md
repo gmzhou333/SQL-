@@ -19,6 +19,18 @@
 - mysql> use RUNOOB;
 - mysql> set names utf8;
 - mysql> SELECT * FROM Websites;
+
+```
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
++----+--------------+---------------------------+-------+---------+
+```
 > 解析
 > - use RUNOOB：选择数据库
 > - set names utf8：用于设置使用的字符集，字符集中可以出现中文
@@ -38,10 +50,14 @@
 - **DROP INDEX** - 删除索引
 
 # 分类演示
-<html>
-SELECT 语句
+```
+SELECT 语法
+SELECT column_name,column_name
+FROM table_name;
+与
+SELECT * FROM table_name;
 
-</html>
+```
 
 
 
