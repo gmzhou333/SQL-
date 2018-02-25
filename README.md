@@ -14,13 +14,11 @@
 - 使用 HTML / CSS
 
 # 数据库表，一个直观的例子
-mysql> use RUNOOB;
-Database changed
+> mysql> use RUNOOB;
+> mysql> set names utf8;
+> mysql> SELECT * FROM Websites;
 
-mysql> set names utf8;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> SELECT * FROM Websites;
+---
 +----+--------------+---------------------------+-------+---------+
 | id | name         | url                       | alexa | country |
 +----+--------------+---------------------------+-------+---------+
@@ -31,6 +29,7 @@ mysql> SELECT * FROM Websites;
 | 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
 +----+--------------+---------------------------+-------+---------+
 5 rows in set (0.01 sec)
+
 
 - use RUNOOB：选择数据库
 - set names utf8：用于设置使用的字符集，字符集中可以出现中文
