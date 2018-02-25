@@ -72,7 +72,7 @@ SELECT * FROM Websites
 WHERE id = 1;
 
 逻辑运算的优先级：
-() not and or
+() > not > and > or
 
 空值判断： is null
 Select * from emp where comm is null;
@@ -97,12 +97,125 @@ Select * from emp where ename like 'M%';
 WHERE子句并不一定带比较运算符，当不带运算符时，会执行一个隐式转换。当0时转化为 false，当其他值是转化为true。例如：
 SELECT studentNO FROM student WHERE 0
 则会返回一个空集，因为每一行记录WHERE都返回false。
-SELECT  studentNO  FROM student WHERE 1
+
+SELECT  studentNO  FROM student WHERE 1;
 或者
-SELECT studentNO FROM student WHERE 'abc'
+SELECT studentNO FROM student WHERE 'abc';
 都将返回student表所有行记录的studentNO列。因为每一行记录WHERE都返回true。
+
+AND & OR:
+如果第一个条件和第二个条件都成立，则 AND 运算符显示一条记录。
+如果第一个条件和第二个条件中只要有一个成立，则 OR 运算符显示一条记录。
+
+实例
+从 "Websites" 表中选取 alexa 排名大于 "15" 且国家为 "CN" 或 "USA" 的所有网站：
+SELECT * FROM Websites
+WHERE alexa > 15
+AND (country = 'CN' OR country = 'USA');
 ```
 
+```
+ORDER BY:
+关键字用于对结果集按照一个列或者多个列进行排序。
+
+关键字默认按照升序对记录进行排序,如果需要按照降序对记录进行排序，可以使用 DESC 关键字。
+实例
+从 "Websites" 表中选取所有网站，并按照 "alexa" 列排序：
+SELECT * FROM Websites
+ORDER BY alexa;
+
+从 "Websites" 表中选取所有网站，并按照 "alexa" 列降序排序：
+SELECT * FROM Websites
+ORDER BY alexa DESC;
+
+从 "Websites" 表中选取所有网站，并按照 "country" 和 "alexa" 列排序：
+SELECT * FROM Websites 
+ORDER BY country,alexa;
+```
+
+```
+INSERT INTO :
+语句用于向表中插入新记录。
+语法
+第一种：
+INSERT INTO table_name
+VALUES (value1,value2,value3,...);
+第二种：
+INSERT INTO table_name (column1,column2,column3,...)
+VALUES (value1,value2,value3,...);
+
+实例
+向 "Websites" 表中插入一个新行：
+INSERT INTO Websites (name,url,alexa,country)
+VALUES('百度','https://www.baidu.com/','4','CN');
+
+插入一个新行，但是只在 "name"、"url" 和 "country" 列插入数据（id 字段会自动更新）：
+INSERT INTO Websites(name,url,country)
+VALUES('stackoverflow','http://stackoverflow.com','IND');
+```
+
+```
+UPDATE:
+用于更新表中已存在的记录。
+
+语法
+UPDATE table_name
+SET column1=value1,column2=value2,...
+WHERE some_column=some_value;
+**注意 SQL UPDATE 语句中的 WHERE 子句。WHERE 子句规定哪条记录或者哪些记录需要更新。如果您省略了 WHERE 子句，所有的记录都将被更新**
+
+实例
+把 "菜鸟教程" 的 alexa 排名更新为 5000，country 改为 USA：
+UPDATE Websites
+SET alexa = '5000',country = 'USA'
+WHERE name = '菜鸟教程';
+
+Update 警告！
+在上面的实例中，如果我们省略了 WHERE 子句，如下所示：
+UPDATE Websites
+SET alexa='5000', country='USA'
+执行以上代码会将 Websites 表中所有数据的 alexa 改为 5000，country 改为 USA。
+执行没有 WHERE 子句的 UPDATE 要慎重，再慎重。
+
+解决
+在 MySQL 中可以通过设置 sql_safe_updates 这个自带的参数来解决，当该参数开启的情况下，你必须在update 语句后携带 where 条件，否则就会报错。
+set sql_safe_updates=1; 表示开启该参数
+```
+
+```
+DELETE:
+用于删除表中的记录。
+
+语法
+DELETE FROM table_name
+WHERE some_column=some_value;
+
+请注意 SQL DELETE 语句中的 WHERE 子句！
+WHERE 子句规定哪条记录或者哪些记录需要删除。如果您省略了 WHERE 子句，所有的记录都将被删除！
+
+实例
+从 "Websites" 表中删除网站名为 "百度" 且国家为 CN 的网站 ：
+DELETE FROM Websites
+WHERE name = '百度' AND country = 'CN';
+ 
+关于删除的三个语句，DROP;TRUNCATE;DELETE的区别
+DROP:
+DROP test;
+删除表test，并释放空间，将test删除的一干二净。
+
+TRUNCATE:
+TRUNCATE test;
+删除表test里的内容，并释放空间，但不删除表的定义，表的结构还在。
+
+DELETE:
+1、删除指定数据
+删除表test中年龄等于30的且国家为US的数据
+DELETE FROM test WHERE age=30 AND country='US';
+2、删除整个表
+仅删除表test内的所有内容，保留表的定义，不释放空间。
+DELETE FROM test 或者 DELETE FROM test;
+DELETE * FROM test 或者 DELETE * FROM test;
+```
 
 
 
