@@ -14,13 +14,15 @@
 - 使用 HTML / CSS
 
 # 数据库表，一个直观的例子
+ 一个数据库通常包含一个或多个表。每个表由一个名字标识（例如:"Websites"）,表包含带有数据的记录（行）。
+ 在 MySQL 的 RUNOOB 数据库中创建了 Websites 表，用于存储网站记录。
 - mysql> use RUNOOB;
 - mysql> set names utf8;
 - mysql> SELECT * FROM Websites;
-## 解析
-- use RUNOOB：选择数据库
-- set names utf8：用于设置使用的字符集，字符集中可以出现中文
-- SELECT * FROM Websites： 读取数据表的信息
+> 解析
+> - use RUNOOB：选择数据库
+> - set names utf8：用于设置使用的字符集，字符集中可以出现中文
+> - SELECT * FROM Websites： 读取数据表的信息
 
 # 一些最重要的 SQL 命令
 - **SELECT** - 从数据库中提取数据
@@ -34,6 +36,12 @@
 - **DROP TABLE** - 删除表
 - **CREATE INDEX** - 创建索引（搜索键）
 - **DROP INDEX** - 删除索引
+
+# 分类演示
+<html>
+SELECT 语句
+
+</html>
 
 
 
