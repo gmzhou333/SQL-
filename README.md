@@ -65,6 +65,13 @@ SELECT DISTINCT country FROM Websites;
 ```
 WHERE:
 用于提取满足指定标准的记录
+
+GRAMMAR
+SELECT column_name,column_name
+FROM table_name
+WHERE column_name operator value;
+
+EXAMPLES
 SELECT * FROM Websites
 WHERE country = 'CN';
 and
@@ -217,8 +224,167 @@ DELETE FROM test 或者 DELETE FROM test;
 DELETE * FROM test 或者 DELETE * FROM test;
 ```
 
+# 高级使用方法
+```
+SELECT TOP:
+用于规定要返回的记录的数目。
 
+SQL Server / MS Access 语法:
+SELECT TOP number|percent column_name(s)
+FROM table_name;
 
+实例
+在 Microsoft SQL Server 中还可以使用百分比作为参数。
+下面的 SQL 语句从 websites 表中选取前面百分之 50 的记录：
+SELECT TOP 50 PERCENT * 
+FROM Websites;
+
+MySQL 语法:
+SELECT column_name(s)
+FROM table_name
+LIMIT number;
+
+实例
+下面的 SQL 语句从 "Websites" 表中选取头两条记录：
+SELECT  *   FROM  Websites
+LIMIT 2;
+```
+
+```
+LIKE 操作符
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。
+
+语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name LIKE pattern;
+
+实例
+下面的 SQL 语句选取 name 以字母 "G" 开始的所有客户：
+SELECT *
+FROM Websites
+WHERE name LIKE 'G%';
+
+选取 name 包含模式 "oo" 的所有客户：
+SELECT * FROM Websites
+WHERE name LIKE '%oo%';
+
+下面的 SQL 语句选取 name 不包含模式 "oo" 的所有客户：
+SELECT * FROM Websites
+WHERE name NOT LIKE '%oo%';
+```
+
+```
+通配符
+在 SQL 中,通配符与 SQL LIKE 操作符一起使用,用于搜索表中的数据。
+
+grammar
+[charlist]	字符列中的任何单一字符;
+[^charlist]
+或
+[!charlist]	不在字符列中的任何单一字符
+
+examples
+下面的 SQL 语句选取 url 以字母 "https" 开始的所有网站：
+SELECT * FROM Websites
+WHERE url LIKE 'https%';
+
+选取 name 以一个任意字符开始，然后是 "oogle" 的所有客户：
+SELECT * FROM Websites
+WHERE name LIKE '_oogle';
+
+选取 name 以 "G" 开始，然后是一个任意字符，然后是 "o"，然后是一个任意字符，然后是 "le" 的所有网站：
+SELECT * FROM Websites
+WHERE LIKE 'G_o_le';
+
+MySQL 中使用 REGEXP 或 NOT REGEXP 运算符 (或 RLIKE 和 NOT RLIKE) 来操作正则表达式。
+下面的 SQL 语句选取 name 以 "G"、"F" 或 "s" 开始的所有网站：
+SELECT * FROM Websites
+WHERE name REGEXP '^[GFs]';
+
+下面的 SQL 语句选取 name 以 A 到 H 字母开头的网站：
+SELECT * FROM Websites
+WHERE name REGEXP '^[A-H]';
+
+选取 name 不以 A 到 H 字母开头的网站：
+SELECT * FROM Websites
+WHERE name REGEXP '^[^A-H]';
+```
+
+```
+IN 操作符
+IN 操作符允许您在 WHERE 子句中规定多个值。
+
+语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...);
+
+实例
+下面的 SQL 语句选取 name 为 "Google" 或 "菜鸟教程" 的所有网站：
+SELECT * FROM Websites
+WHERE name IN ('Google','菜鸟教程');
+```
+
+```
+BETWEEN 操作符
+选取介于两个值之间的数据范围内的值。这些值可以是数值、文本或者日期。
+
+语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+
+examples
+下面的 SQL 语句选取 alexa 介于 1 和 20 之间的所有网站：
+SELECT * FROM Websites
+WHERE alexa BETWEEN 1 AND 20;
+
+下面的 SQL 语句选取alexa介于 1 和 20 之间但 country 不为 USA 和 IND 的所有网站：
+SELECT * FROM Websites
+WHERE (alexa BETWEEN 1 AND 20) 
+      AND 
+      NOT country IN ('USA','IND');
+      
+下面的 SQL 语句选取 name 以介于 'A' 和 'H' 之间字母开始的所有网站：
+SELECT * FROM Websites
+WHERE name BERWEEN 'A' AND 'H';
+
+下面的 SQL 语句选取 name 不介于 'A' 和 'H' 之间字母开始的所有网站：
+SELECT * FROM Websites
+WHERE name NOT BETWENN 'A' AND 'H';
+
+示例表
+下面是 "access_log" 网站访问记录表的数据，其中：
+aid：为自增 id。
+site_id：为对应 websites表的网站 id。
+count：访问次数。
+date：为访问日期。
+
+mysql> SELECT * FROM access_log;
++-----+---------+-------+------------+
+| aid | site_id | count | date       |
++-----+---------+-------+------------+
+|   1 |       1 |    45 | 2016-05-10 |
+|   2 |       3 |   100 | 2016-05-13 |
+|   3 |       1 |   230 | 2016-05-14 |
+|   4 |       2 |    10 | 2016-05-14 |
+|   5 |       5 |   205 | 2016-05-14 |
+|   6 |       4 |    13 | 2016-05-15 |
+|   7 |       3 |   220 | 2016-05-15 |
+|   8 |       5 |   545 | 2016-05-16 |
+|   9 |       3 |   201 | 2016-05-17 |
++-----+---------+-------+------------+
+选取 date 介于 '2016-05-10' 和 '2016-05-14' 之间的所有访问记录：
+SELECT * FROM access_log
+WHERE date BETWEEN '2016-05-10' AND '2016-05-14';
+
+请注意，在不同的数据库中，BETWEEN 操作符会产生不同的结果！
+在某些数据库中，BETWEEN 选取介于两个值之间但不包括两个测试值的字段。
+在某些数据库中，BETWEEN 选取介于两个值之间且包括两个测试值的字段。
+在某些数据库中，BETWEEN 选取介于两个值之间且包括第一个测试值但不包括最后一个测试值的字段。
+因此，请检查您的数据库是如何处理 BETWEEN 操作符！
+```
 
 
 
