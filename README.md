@@ -386,5 +386,52 @@ WHERE date BETWEEN '2016-05-10' AND '2016-05-14';
 因此，请检查您的数据库是如何处理 BETWEEN 操作符！
 ```
 
+```
+别名
+通过使用 SQL，可以为表名称或列名称指定别名。
+基本上，创建别名是为了让列名称的可读性更强。
+
+列的 SQL 别名语法
+SELECT column_name AS alias_name
+FROM table_name;
+表的 SQL 别名语法
+SELECT column_name(s)
+FROM table_name AS alias_name;
+
+在下面的 SQL 语句中，我们把三个列（url、alexa 和 country）结合在一起，并创建一个名为 "site_info" 的别名：
+SELECT name,CONCAT(url,',',alexa,',',country) AS site_info
+FROM Websites;
+
+下面的 SQL 语句选取 "菜鸟教程" 的所访问记录。我们使用 "Websites" 和 "access_log" 表，并分别为它们指定表别名 "w" 和 "a"（通过使用别名让 SQL 更简短）：
+SELECT w.name,w.url,a.count,a.date 
+FROM Websites AS w , access_log AS a
+WHERE a.site_id = w.id AND  w.name = '菜鸟教程';
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
