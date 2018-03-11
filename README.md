@@ -408,8 +408,20 @@ FROM Websites AS w , access_log AS a
 WHERE a.site_id = w.id AND  w.name = '菜鸟教程';
 ```
 
+```
+连接(JOIN)
+JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+```
+```
+INNER JOIN 关键字在表中存在至少一个匹配时返回行。
+语法
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name=table2.column_name;
 
-
+```
 
 
 
